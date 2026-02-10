@@ -1,0 +1,8 @@
+services:
+  notifier:
+    build: https://github.com/radioegor146/aave-health-factor-notifier.git
+    restart: unless-stopped
+    environment:
+      CHECK_ADDRESS: address_to_check
+      TELEGRAM_BOT_TOKEN: bot_token
+      TELEGRAM_BOT_CHAT_ID: chat_id
