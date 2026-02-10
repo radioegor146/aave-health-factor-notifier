@@ -89,6 +89,8 @@ interface AlertContext {
   status: UserStatus,
 }
 
+let warningWasSent = false
+
 function getAlertTrigger (context: AlertContext): null | string {
   if (!context.status.healthFactor && context.previousStatus.healthFactor) {
     return 'no health factor now'
@@ -102,9 +104,14 @@ function getAlertTrigger (context: AlertContext): null | string {
       return 'critical health factor'
     }
     case Status.GOOD: {
+      warningWasSent = false
       break
     }
     case Status.WARNING: {
+      if (warningWasSent) {
+        return null
+      }
+      warningWasSent = true
       return 'warning health factor'
     }
   }
